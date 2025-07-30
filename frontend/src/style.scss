@@ -1,0 +1,83 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Exo 2", sans-serif;
+  list-style: none;
+  text-decoration: none;
+  border: none;
+  outline: none;
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  background-color: #1a1a1a;
+  color: #f2f2f2;
+  scroll-behavior: smooth;
+}
+
+nav {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .logo {
+    display: flex;
+    img {
+      height: 50px;
+      width: auto;
+    }
+  }
+  .search-container {
+    position: relative;
+    width: 300px; // ширина контейнера
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 10px 40px 10px 40px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    outline: none;
+    background: #f2f2f2
+      url("../public/images/search_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg")
+      no-repeat 10px center;
+    background-size: 20px;
+    color: #333;
+
+    &::placeholder {
+      color: #aaa;
+      font-style: italic;
+    }
+
+    &:focus {
+      border: 1px solid #999;
+      background-color: #f2f2f2;
+    }
+  }
+  .account {
+    display: flex;
+    gap: 20px;
+    .buttonhover {
+      position: relative;
+      padding: 10px;
+      border-radius: 30px;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #1a1a1a 30%, #f2f2f2);
+    }
+    button {
+      background: none;
+      color: #f2f2f2;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s easy;
+    }
+    button:hover {
+      color: #1a1a1a;
+    }
+  }
+}

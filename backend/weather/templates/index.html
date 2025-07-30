@@ -1,0 +1,24 @@
+{% load django_vite %}
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Главная</title>
+    {% vite_asset 'src/main.js' %}
+  </head>
+  <body>
+    <h1>Главная страница</h1>
+    <div class="weather-container">
+      <h2 id="city">Определяем местоположение...</h2>
+      <p id="temp"></p>
+    </div>
+    <a href="{% url 'about' %}">О нас</a> |
+    <a href="{% url 'contacts' %}">Контакты</a>
+  </body>
+</html>
+<div class="weather-card">
+  <i class="wi wi-day-sunny weather-icon" id="weather-icon"></i>
+  <h2 id="city">Определяем местоположение...</h2>
+  <p id="temp"></p>
+  <p id="desc"></p>
+</div>
