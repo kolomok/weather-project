@@ -12,6 +12,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("search-input");
   const searchButton = document.getElementById("search-btn");
 
+  function showHourlyForecast(list) {
+    const hours = document.getElementById("hours");
+    hours.innerHTML = "";
+
+    list.forEach((item) => {
+      const date = new Date(item.dt_txt);
+      const hour = date.getHours().toString().padStart(2, "0");
+      const card = document.createElement("div");
+      card.className = "hour-card";
+      card.innerHTML = `
+      <p>${hour}:00</p>
+      <img src="https://openweathermap.org/img/wn/${
+        item.weather[0].icon
+      }@2x.png" alt="${item.weather[0].description}">
+      <p>${Math.round(item.main.temp)}°C</p>
+    `;
+      hours.appendChild(card);
+    });
+  }
+
   // --- Видео по погоде ---
   function setBackgroundVideo(weatherMain, iconCode) {
     const video = document.getElementById("bg-video");
@@ -24,7 +44,9 @@ document.addEventListener("DOMContentLoaded", () => {
         ? "./public/videos/clear-night.mp4"
         : "./public/videos/sunny.mp4";
     } else if (weatherMain === "Rain") {
-      src = isNight ? "./public/videos/пше.mp4" : "./public/videos/rain.mp4";
+      src = isNight
+        ? "./public/videos/rain-night.mp4"
+        : "./public/videos/rain.mp4";
     } else if (weatherMain === "Snow") {
       src = isNight
         ? "./public/videos/snow-night.mp4"
@@ -120,25 +142,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function degToCompass(deg) {
     const val = Math.floor(deg / 22.5 + 0.5);
-    const arr = [
-      "С",
-      "ССВ",
-      "СВ",
-      "ВСВ",
-      "В",
-      "ВЮВ",
-      "ЮВ",
-      "ЮЮВ",
-      "Ю",
-      "ЮЮЗ",
-      "ЮЗ",
-      "ЗЮЗ",
-      "З",
-      "ЗСЗ",
-      "СЗ",
-      "ССЗ",
-    ];
-    return arr[val % 16];
+    const arr = ["С", "СВ", "В", "ЮВ", "Ю", "ЮЗ", "З", "СЗ"];
+    return arr[val % arr.length];
   }
 
   function getWeekForecast(lat, lon) {
@@ -149,6 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((data) => {
         const days = {};
 
+        // группировка по дням
         data.list.forEach((item) => {
           const date = new Date(item.dt_txt);
           const dayKey = date.toISOString().split("T")[0];
@@ -159,8 +165,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const container = document.getElementById("week-forecast");
         container.innerHTML = "";
 
+        // создаём карточки
         Object.keys(days).forEach((day, index) => {
-          if (index === 0) return;
+          if (index === 0) return; // пропускаем сегодняшний день (уже есть отдельный блок)
           const items = days[day];
           let minTemp = Infinity;
           let maxTemp = -Infinity;
@@ -174,20 +181,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
           const card = document.createElement("div");
           card.className = "day-card";
+          card.dataset.date = day;
           card.innerHTML = `
-            <p class="day-name">${new Date(day).toLocaleDateString("ru-RU", {
-              weekday: "long",
-            })}</p>
-            <img src="https://openweathermap.org/img/wn/${
-              midday.weather[0].icon
-            }@2x.png" id="weather-icon" alt="${midday.weather[0].description}">
-            <p>${midday.weather[0].description}</p>
-            <p>Мин: ${Math.round(minTemp)}°C | Макс: ${Math.round(
-            maxTemp
-          )}°C</p>
-          `;
+          <p class="day-name">${new Date(day).toLocaleDateString("ru-RU", {
+            weekday: "long",
+          })}</p>
+          <img src="https://openweathermap.org/img/wn/${
+            midday.weather[0].icon
+          }@2x.png" id="weather-icon" alt="${midday.weather[0].description}">
+          <p>${midday.weather[0].description}</p>
+          <p>Мин: ${Math.round(minTemp)}°C | Макс: ${Math.round(maxTemp)}°C</p>
+        `;
           container.appendChild(card);
+
+          // обработчик клика
+          card.addEventListener("click", () => {
+            document
+              .querySelectorAll(".day-card")
+              .forEach((c) => c.classList.remove("active"));
+            card.classList.add("active");
+            showHourlyForecast(days[day]);
+          });
         });
+
+        // по умолчанию показываем первый день (сегодня)
+        const todayKey = Object.keys(days)[0];
+        showHourlyForecast(days[todayKey]);
       });
   }
+});
+const video = document.getElementById("bg-video");
+const preloader = document.getElementById("preloader");
+
+video.addEventListener("canplaythrough", () => {
+  preloader.style.opacity = "0";
+  setTimeout(() => {
+    preloader.style.display = "none";
+  }, 500); // ждём пока пропадёт плавно
 });
