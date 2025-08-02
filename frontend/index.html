@@ -3,10 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <title>Step Weather</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css"
-    />
     <link rel="icon" href="./public/images/logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,24 +12,52 @@
     />
   </head>
   <body>
-    <nav>
-      <div class="logo">
-        <img src="./public/images/logo.png" alt="logo" />
-        <h1>Step Weather</h1>
-      </div>
-      <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search city" />
-      </div>
+    <video id="bg-video" autoplay muted loop playsinline></video>
+    <div class="interface">
+      <nav>
+        <div class="logo">
+          <img src="./public/images/logo.png" alt="logo" />
+          <h1>Step Weather</h1>
+        </div>
+        <div class="search-container">
+          <input
+            type="text"
+            id="search-input"
+            class="search-input"
+            placeholder="Search city..."
+          />
+          <button id="search-btn">
+            <img
+              src="./public/images/search_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg"
+              alt=""
+            />
+          </button>
+        </div>
 
-      <div class="account">
-        <div class="buttonhover">
-          <button>Register</button>
+        <div class="account">
+          <div class="buttonhover">
+            <button>
+              <img
+                src="./public/images/account_circle_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg"
+                alt=""
+              />
+            </button>
+          </div>
         </div>
-        <div class="buttonhover">
-          <button>Sign In</button>
+      </nav>
+      <header>
+        <div class="weather-card" id="first-card">
+          <p>Сейчас</p>
+          <img id="weather-icon" alt="" />
+          <h2 id="city">Определяем местоположение...</h2>
+          <p id="temp"></p>
+          <p id="description"></p>
+          <p id="humidity"></p>
+          <p id="wind"></p>
         </div>
-      </div>
-    </nav>
+      </header>
+      <div id="week-forecast" class="weather-card-next-days"></div>
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
