@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -38,7 +38,7 @@
             type="text"
             id="search-input"
             class="search-input"
-            placeholder="Search city..."
+            placeholder="Найти город..."
           />
 
           <button id="search-btn">
@@ -51,13 +51,18 @@
 
         <div class="account">
           <div class="buttonhover">
-            <button>
+            <button id="accButton">
               <img
                 src="./public/images/account_circle_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg"
                 alt=""
               />
             </button>
           </div>
+        </div>
+        <div class="sett" id="accSett">
+          <button id="closeSett">X</button>
+          <button>Войти в аккаунт</button>
+          <button>Избранное</button>
         </div>
       </nav>
       <header>
@@ -75,6 +80,7 @@
       <section>
         <div id="week-forecast" class="weather-card-next-days"></div>
       </section>
+      <a href="./src/pages/login.html">login</a>
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>

@@ -11,6 +11,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const icon = document.getElementById("weather-icon");
   const searchInput = document.getElementById("search-input");
   const searchButton = document.getElementById("search-btn");
+  const accButton = document.getElementById("accButton");
+  const accSett = document.getElementById("accSett");
+  const closeSett = document.getElementById("closeSett");
+  accButton.addEventListener("click", () => {
+    accSett.style.display = accSett.style.display === "flex" ? "none" : "flex";
+  });
+
+  closeSett.addEventListener("click", () => {
+    accSett.style.display = accSett.style.display === "flex" ? "none" : "flex";
+  });
 
   function showHourlyForecast(list) {
     const hours = document.getElementById("hours");
