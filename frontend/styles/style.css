@@ -1,5 +1,4 @@
-@charset "UTF-8";
-@import url("./login");
+@import url("./_login.scss");
 @import url("./_register.scss");
 * {
   margin: 0;
@@ -43,7 +42,6 @@ html {
   transition: opacity 0.5s ease;
   -webkit-animation: bg 10s easy;
           animation: bg 10s easy;
-  /* From Uiverse.io by zanina-yassine */
 }
 #preloader .container {
   width: 250px;
@@ -244,6 +242,7 @@ nav .search-container #search-btn {
   width: 60px;
   height: 50px;
   border-radius: 50%;
+  background-color: #fafafa;
 }
 nav .search-input {
   width: 100%;
@@ -381,32 +380,22 @@ header .weather-card {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
   height: 500px;
-  max-width: 350px;
+  max-width: 900px;
   width: 100%;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
-header .weather-card:hover {
-  -webkit-transform: translateY(-5px);
-          transform: translateY(-5px);
-}
-header .weather-card #city {
-  font-size: 2rem;
-}
-header .weather-card #temp {
-  font-size: 1.5em;
-}
-header .weather-card:nth-child(2) {
-  width: 100%;
-  max-width: 500px;
+header .weather-card .infoweathercard {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -414,14 +403,72 @@ header .weather-card:nth-child(2) {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+header .weather-card:hover {
+  -webkit-transform: translateY(-5px);
+          transform: translateY(-5px);
+}
+header .weather-card #city {
+  font-size: 2em;
+}
+header .weather-card #temp {
+  font-size: 3em;
+  font-weight: 800;
+}
+header .weather-card #description,
+header .weather-card #humidity,
+header .weather-card #wind {
+  font-size: 2em;
+}
+header .weather-card #description {
+  max-width: 400px;
+}
+header .hours {
+  width: 100%;
+  max-width: 700px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   gap: 10px;
   scroll-behavior: smooth;
   overflow-y: scroll;
+  margin-top: 40px;
+  padding: 30px;
+  border: 1px solid rgba(26, 26, 26, 0.3137254902);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  -webkit-box-shadow: 0 4px 20px rgba(0, 0, 0, 0);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0);
+  text-align: center;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  height: 500px;
+  max-width: 700px;
+  width: 100%;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
-header .weather-card:nth-child(2) .hour-card {
+header .hours:hover {
+  -webkit-transform: translateY(-5px);
+          transform: translateY(-5px);
+}
+header .hours #city {
+  font-size: 2rem;
+}
+header .hours #temp {
+  font-size: 1.5em;
+}
+header .hours .hour-card {
   width: 100%;
   background-color: rgba(26, 26, 26, 0.3137254902);
   border-radius: 30px;
@@ -437,7 +484,7 @@ header .weather-card:nth-child(2) .hour-card {
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
-header .weather-card:nth-child(2) .hour-card:hover {
+header .hours .hour-card:hover {
   -webkit-transform: translatey(-5px);
           transform: translatey(-5px);
 }
@@ -492,7 +539,8 @@ section {
       -ms-flex-pack: justify;
           justify-content: space-between;
   height: 250px;
-  width: auto;
+  max-width: 305px;
+  width: 100%;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
@@ -526,7 +574,6 @@ section {
   background: linear-gradient(90deg, #43e97b, #38f9d7);
 }
 
-/* Для Firefox */
 #hours {
   scrollbar-width: thin;
   scrollbar-color: #4facfe rgba(255, 255, 255, 0.1);

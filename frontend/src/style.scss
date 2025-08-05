@@ -1,4 +1,4 @@
-@import url("./login");
+@import url("./_login.scss");
 @import url("./_register.scss");
 * {
   margin: 0;
@@ -33,7 +33,6 @@ html {
   z-index: 9999;
   transition: opacity 0.5s ease;
   animation: bg 10s easy;
-  /* From Uiverse.io by zanina-yassine */
   .container {
     width: 250px;
     height: 250px;
@@ -192,6 +191,7 @@ nav {
       width: 60px;
       height: 50px;
       border-radius: 50%;
+      background-color: #fafafa;
     }
   }
 
@@ -297,33 +297,71 @@ header {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0);
     text-align: center;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
     height: 500px;
-    max-width: 350px;
+    max-width: 900px;
+    width: 100%;
+    transition: all 0.3s ease;
+    .infoweathercard {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      // align-items: center;
+    }
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    #city {
+      font-size: 2em;
+    }
+    #temp {
+      font-size: 3em;
+      font-weight: 800;
+    }
+    #description,
+    #humidity,
+    #wind {
+      font-size: 2em;
+    }
+    #description {
+      max-width: 400px;
+    }
+  }
+  .hours {
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+    margin-top: 40px;
+    padding: 30px;
+    border: 1px solid #1a1a1a50;
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0);
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: 500px;
+    max-width: 700px;
     width: 100%;
     transition: all 0.3s ease;
 
     &:hover {
       transform: translateY(-5px);
     }
-
     #city {
       font-size: 2rem;
     }
     #temp {
       font-size: 1.5em;
     }
-  }
-  .weather-card:nth-child(2) {
-    width: 100%;
-    max-width: 500px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    scroll-behavior: smooth;
-    overflow-y: scroll;
 
     .hour-card {
       width: 100%;
@@ -373,7 +411,8 @@ section {
     flex-direction: column;
     justify-content: space-between;
     height: 250px;
-    width: auto;
+    max-width: 305px;
+    width: 100%;
     transition: all 0.3s ease;
 
     &:hover {
@@ -402,7 +441,6 @@ section {
   background: linear-gradient(90deg, #43e97b, #38f9d7);
 }
 
-/* Для Firefox */
 #hours {
   scrollbar-width: thin;
   scrollbar-color: #4facfe rgba(255, 255, 255, 0.1);
