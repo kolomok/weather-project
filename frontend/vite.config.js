@@ -8,8 +8,10 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, "src/main.js"),
-        about: path.resolve(__dirname, "src/pages/about.js"),
-        contacts: path.resolve(__dirname, "src/pages/contacts.js"),
+        city: path.resolve(__dirname, "src/city.js"),
+        login: path.resolve(__dirname, "src/login.js"),
+        register: path.resolve(__dirname, "src/register.js"),
+        favorites: path.resolve(__dirname, "src/favorites.js"),
       },
     },
   },

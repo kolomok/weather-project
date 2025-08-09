@@ -43,13 +43,14 @@ INSTALLED_APPS = [
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
-    FRONTEND_DIST
+    BASE_DIR.parent / "frontend" / "dist"
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+DJANGO_VITE_ASSETS_PATH = BASE_DIR.parent / "frontend" / "dist"
+DJANGO_VITE_MANIFEST_PATH = DJANGO_VITE_ASSETS_PATH / ".vite" / "manifest.json"
 DJANGO_VITE_DEV_MODE = False
 
-DJANGO_VITE_MANIFEST_PATH = str(BASE_DIR.parent / "frontend" / "dist" / ".vite" / "manifest.json")
-DJANGO_VITE_ASSETS_PATH = str(BASE_DIR.parent / "frontend" / "dist")
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

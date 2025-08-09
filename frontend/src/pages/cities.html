@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Step Weather</title>
+    <link rel="icon" href="./public/images/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="preloader">
+      <div class="container">
+        <div class="cloud front">
+          <span class="left-front"></span>
+          <span class="right-front"></span>
+        </div>
+        <span class="sun sunshine"></span>
+        <span class="sun"></span>
+        <div class="cloud back">
+          <span class="left-back"></span>
+          <span class="right-back"></span>
+        </div>
+      </div>
+    </div>
+    <video id="bg-video" autoplay muted loop playsinline></video>
+    <div class="interface">
+      <nav>
+        <div class="logo">
+          <img src="./public/images/logo.png" alt="logo" />
+          <h1>StepWeather</h1>
+        </div>
+        <div class="search-container">
+          <input
+            type="text"
+            id="search-input"
+            class="search-input"
+            placeholder="Найти город..."
+          />
+
+          <button id="search-btn">
+            <img
+              src="./public/images/search_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg"
+              alt=""
+            />
+          </button>
+        </div>
+
+        <div class="account">
+          <div class="buttonhover">
+            <button id="accButton">
+              <img
+                src="./public/images/account_circle_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg"
+                alt=""
+              />
+            </button>
+          </div>
+        </div>
+        <div class="sett" id="accSett">
+          <button id="closeSett">X</button>
+          <button>Войти в аккаунт</button>
+          <button>Избранное</button>
+        </div>
+      </nav>
+      <header>
+        <div class="weather-card" id="first-card">
+          <div class="infoweathercard">
+            <p>Сейчас</p>
+            <img id="weather-icon" alt="" />
+            <p id="temp"></p>
+            <p id="description"></p>
+          </div>
+          <div class="infoweathercard">
+            <h2 id="city">Определяем местоположение...</h2>
+            <p id="humidity"></p>
+            <p id="wind"></p>
+          </div>
+        </div>
+
+        <div id="hours" class="hours"></div>
+      </header>
+      <section>
+        <div id="week-forecast" class="weather-card-next-days"></div>
+      </section>
+    </div>
+    {% if query %}
+    <script>
+      const initialQuery = "{{ query }}";
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("search-input").value = initialQuery;
+        // Можно вызвать поиск сразу:
+        document.getElementById("search-btn").click();
+      });
+    </script>
+    {% endif %}
+  </body>
+</html>

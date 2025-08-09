@@ -1,0 +1,4 @@
+/* empty css              */document.addEventListener("DOMContentLoaded",()=>{const s=document.getElementById("search-input"),o=document.getElementById("search-btn"),e=document.getElementById("search-results");o.addEventListener("click",async()=>{const r=s.value.trim();if(!r){alert("Введите название города");return}try{const c=await(await fetch(`https://api.openweathermap.org/data/2.5/find?q=${r}&type=like&units=metric&lang=ru&appid=ВАШ_API_КЛЮЧ`)).json();if(e.innerHTML="",c.count===0){e.innerHTML="<p>Города не найдены</p>";return}c.list.forEach(t=>{const n=document.createElement("div");n.className="city-card",n.innerHTML=`
+          <h3>${t.name}, ${t.sys.country}</h3>
+          <p>${Math.round(t.main.temp)}°C, ${t.weather[0].description}</p>
+        `,e.appendChild(n)})}catch(a){console.error(a),e.innerHTML="<p>Ошибка при загрузке данных</p>"}})});

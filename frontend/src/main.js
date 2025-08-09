@@ -44,32 +44,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function setBackgroundVideo(weatherMain, iconCode) {
     const video = document.getElementById("bg-video");
-    let src = "./public/videos/default.mp4";
+    let src = "/static/videos/default.mp4";
 
     const isNight = iconCode && iconCode.includes("n");
 
     if (weatherMain === "Clear") {
       src = isNight
-        ? "./public/videos/clear-night.mp4"
-        : "./public/videos/sunny.mp4";
+        ? "/static/videos/clear-night.mp4"
+        : "/static/videos/sunny.mp4";
     } else if (weatherMain === "Rain") {
       src = isNight
-        ? "./public/videos/rain-night.mp4"
-        : "./public/videos/rain.mp4";
+        ? "/static/videos/rain-night.mp4"
+        : "/static/videos/rain.mp4";
     } else if (weatherMain === "Snow") {
       src = isNight
-        ? "./public/videos/snow-night.mp4"
-        : "./public/videos/snow.mp4";
+        ? "/static/videos/snow-night.mp4"
+        : "/static/videos/snow.mp4";
     } else if (weatherMain === "Clouds") {
       src = isNight
-        ? "./public/videos/clouds-night.mp4"
-        : "./public/videos/clouds.mp4";
+        ? "/static/videos/clouds-night.mp4"
+        : "/static/videos/clouds.mp4";
     } else if (weatherMain === "Thunderstorm") {
-      src = "./public/videos/thunder.mp4";
+      src = "/static/videos/thunder.mp4";
     } else if (weatherMain === "Drizzle") {
-      src = "./public/videos/drizzle.mp4";
+      src = "/static/videos/drizzle.mp4";
     } else if (weatherMain === "Mist" || weatherMain === "Fog") {
-      src = "./public/videos/fog.mp4";
+      src = "/static/videos/fog.mp4";
     }
 
     video.src = src;

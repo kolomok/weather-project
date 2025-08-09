@@ -1,24 +1,101 @@
-{% load django_vite %}
+{%load static%} {%load django_vite%}
 <!DOCTYPE html>
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <title>Главная</title>
-    {% vite_asset 'src/main.js' %}
+    <title>Step Weather</title>
+    <link rel="icon" href="{% static 'images/logo.png' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <h1>Главная страница</h1>
-    <div class="weather-container">
-      <h2 id="city">Определяем местоположение...</h2>
-      <p id="temp"></p>
+    <div id="preloader">
+      <div class="container">
+        <div class="cloud front">
+          <span class="left-front"></span>
+          <span class="right-front"></span>
+        </div>
+        <span class="sun sunshine"></span>
+        <span class="sun"></span>
+        <div class="cloud back">
+          <span class="left-back"></span>
+          <span class="right-back"></span>
+        </div>
+      </div>
     </div>
-    <a href="{% url 'about' %}">О нас</a> |
-    <a href="{% url 'contacts' %}">Контакты</a>
+    <video id="bg-video" autoplay muted loop playsinline></video>
+    <div class="interface">
+      <nav>
+        <div class="logo">
+          <img src="{% static 'images/logo.png' %}" alt="logo" />
+          <h1>StepWeather</h1>
+        </div>
+        <form action="/search/" method="get" class="search-container">
+          <input
+            type="text"
+            name="q"
+            id="search-input"
+            class="search-input"
+            placeholder="Найти город..."
+            required
+          />
+          <button type="submit" id="search-btn">
+            <img
+              src="{% static 'images/search_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg' %}"
+              alt="search"
+            />
+          </button>
+        </form>
+
+        <div class="account">
+          <div class="buttonhover">
+            <button id="accButton">
+              <img
+                src="{% static 'images/account_circle_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg' %}"
+                alt="acc"
+              />
+            </button>
+          </div>
+        </div>
+        <div class="sett" id="accSett">
+          <button id="closeSett">X</button>
+          <a href="{% url 'login' %}">Войти</a>
+          <a href="{% url 'favorites'%}">Избранное</a>
+          {% if request.user.is_authenticated %}
+          <div class="user-info">
+            <span>👤 {{ request.user.username }}</span>
+            <a href="{% url 'logout' %}">Выйти</a>
+          </div>
+          {% else %}
+          <a href="{% url 'login_page' %}" class="btn-login">Войти</a>
+          {% endif %}
+        </div>
+      </nav>
+      <header>
+        <div class="weather-card" id="first-card">
+          <div class="infoweathercard">
+            <p>Сейчас</p>
+            <img id="weather-icon" alt="" />
+            <p id="temp"></p>
+            <p id="description"></p>
+          </div>
+          <div class="infoweathercard">
+            <h2 id="city">Определяем местоположение...</h2>
+            <p id="humidity"></p>
+            <p id="wind"></p>
+          </div>
+        </div>
+
+        <div id="hours" class="hours"></div>
+      </header>
+      <section>
+        <div id="week-forecast" class="weather-card-next-days"></div>
+      </section>
+    </div>
+    {% vite_asset 'src/main.js' %}
   </body>
 </html>
-<div class="weather-card">
-  <i class="wi wi-day-sunny weather-icon" id="weather-icon"></i>
-  <h2 id="city">Определяем местоположение...</h2>
-  <p id="temp"></p>
-  <p id="desc"></p>
-</div>
