@@ -37,6 +37,7 @@
           <img src="{% static 'images/logo.png' %}" alt="logo" />
           <h1>StepWeather</h1>
         </div>
+
         <div class="search-container">
           <input
             type="text"
@@ -51,6 +52,7 @@
             />
           </button>
         </div>
+
         <div class="account">
           <button id="addbutton" data-city="{{ query }}">
             <img
@@ -58,19 +60,29 @@
               alt=""
             />
           </button>
+
           <div class="buttonhover">
             <button id="accButton">
               <img
                 src="{% static 'images/account_circle_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg' %}"
-                alt="Аккаунт"
+                alt="acc"
               />
             </button>
           </div>
-        </div>
-        <div class="sett" id="accSett">
-          <button id="closeSett">X</button>
-          <button>Войти в аккаунт</button>
-          <a href="{% url 'favorites' %}">Избранное</a>
+
+          <div class="sett" id="accSett">
+            <button id="closeSett">X</button>
+            <a href="{% url 'favorites'%}">Избранное</a>
+
+            {% if request.user.is_authenticated %}
+            <div class="user-info">
+              <span>👤 {{ request.user.username }}</span>
+              <a href="{% url 'logout' %}">Выйти</a>
+            </div>
+            {% else %}
+            <a href="{% url 'login' %}" class="btn-login">Войти</a>
+            {% endif %}
+          </div>
         </div>
       </nav>
 

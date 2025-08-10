@@ -63,7 +63,6 @@
         </div>
         <div class="sett" id="accSett">
           <button id="closeSett">X</button>
-          <a href="{% url 'login' %}">Войти</a>
           <a href="{% url 'favorites'%}">Избранное</a>
           {% if request.user.is_authenticated %}
           <div class="user-info">
@@ -71,7 +70,7 @@
             <a href="{% url 'logout' %}">Выйти</a>
           </div>
           {% else %}
-          <a href="{% url 'login_page' %}" class="btn-login">Войти</a>
+          <a href="{% url 'login' %}" class="btn-login">Войти</a>
           {% endif %}
         </div>
       </nav>

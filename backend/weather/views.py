@@ -1,4 +1,3 @@
-# views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -50,9 +49,6 @@ def city_search_page(request):
         {"query": query, "cities": cities, "weather": weather_data},
     )
 
-
-# --------- AUTH API ----------
-
 @csrf_exempt
 def register_user(request):
     if request.method != "POST":
@@ -90,15 +86,12 @@ def login_user(request):
     login(request, user)
     return JsonResponse({"success": True})
 
-
-# --------- FAVORITES API ----------
-
 @login_required
 def favorites_list(request):
     """GET /api/favorites/ — список избранного текущего пользователя (JSON)"""
     items = list(
         FavouriteCity.objects.filter(user=request.user)
-        .values("id", "name", "country", "lat", "lon", "created_at")  # <-- lon (без опечаток)
+        .values("id", "name", "country", "lat", "lon", "created_at")  
     )
     return JsonResponse({"success": True, "items": items})
 
@@ -106,43 +99,50 @@ def favorites_list(request):
 @require_POST
 @login_required
 def favorites_add(request):
-    """POST /api/favorites/add/ — добавление города в избранное.
-       Тело: { "name": "Prague", "country": "CZ", "lat": 50.08, "lon": 14.43 } (name обязателен)"""
     try:
-        payload = json.loads(request.body.decode("utf-8"))
-    except Exception:
-        return JsonResponse({"success": False, "error": "Bad JSON"}, status=400)
+        payload = json.loads(request.body.decode('utf-8'))
+        name = (payload.get('name') or '').strip()
+        country = (payload.get('country') or '').strip().upper()
+        lat = payload.get('lat')
+        lon = payload.get('lon')
 
-    name = (payload.get("name") or "").strip()
-    country = (payload.get("country") or "").strip().upper()
-    lat = payload.get("lat")
-    lon = payload.get("lon")
+        if not name:
+            return JsonResponse({'error': 'name is required'}, status=400)
 
-    if not name:
-        return JsonResponse({"success": False, "error": "name is required"}, status=400)
+        obj, created = FavouriteCity.objects.get_or_create(
+            user=request.user,
+            name=name,
+            country=country or '',
+            defaults={'lat': lat, 'lon': lon}
+        )
 
-    obj, created = FavouriteCity.objects.get_or_create(
-        user=request.user, name=name, country=country or ""
-    )
-    if created:
-        obj.lat = lat
-        obj.lon = lon
-        obj.save()
+        if not created and (lat is not None or lon is not None):
+            changed = False
+            if lat is not None and obj.lat != lat:
+                obj.lat = lat
+                changed = True
+            if lon is not None and obj.lon != lon:
+                obj.lon = lon
+                changed = True
+            if changed:
+                obj.save(update_fields=['lat', 'lon'])
 
-    return JsonResponse({"success": True, "created": created, "id": obj.id})
+        return JsonResponse({'OK': True, 'ok': True, 'success': True, 'created': created, 'id': obj.id})
+
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
 
 
 @require_POST
 @login_required
 def favorites_remove(request):
-    """POST /api/favorites/remove/ — удаление из избранного.
-       Тело: либо { "id": 123 }, либо { "name": "Prague", "country": "CZ" }"""
     try:
         payload = json.loads(request.body.decode("utf-8"))
     except Exception:
-        return JsonResponse({"success": False, "error": "Bad JSON"}, status=400)
+        return JsonResponse({"error": "Bad JSON"}, status=400)
 
-    fav_id = payload.get("id")  # <-- было payload.id(...) — это ошибка
+    fav_id = payload.get("id")
     name = (payload.get("name") or "").strip()
     country = (payload.get("country") or "").strip().upper()
 
@@ -155,7 +155,9 @@ def favorites_remove(request):
         if country:
             qs = qs.filter(country=country)
     else:
-        return JsonResponse({"success": False, "error": "id or name required"}, status=400)
+        return JsonResponse({"error": "id or name required"}, status=400)
 
     deleted, _ = qs.delete()
-    return JsonResponse({"success": True, "deleted": deleted})
+    return JsonResponse({"OK": True, "ok": True, "success": True, "deleted": deleted})
+
+

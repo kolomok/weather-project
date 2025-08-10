@@ -18,12 +18,35 @@ document.addEventListener("DOMContentLoaded", () => {
   const video = document.getElementById("bg-video");
   const preloader = document.getElementById("preloader");
 
-  // Скрыть прелоадер после загрузки видео
   video.addEventListener("canplaythrough", () => {
     preloader.style.opacity = "0";
     setTimeout(() => {
       preloader.style.display = "none";
     }, 500);
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const authArea = document.getElementById("auth-area");
+    if (!authArea) return;
+
+    fetch("/api/whoami/", {
+      method: "GET",
+      credentials: "same-origin",
+      headers: { Accept: "application/json" },
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        if (!data.authenticated) return;
+
+        authArea.innerHTML = `
+        <div class="user-badge">
+          <span class="user-name">👋 ${data.username}</span>
+          <a href="/favorites/" class="btn-ghost">Избранное</a>
+          <a href="/logout/" class="btn-danger">Выйти</a>
+        </div>
+      `;
+      })
+      .catch(() => {});
   });
 
   addButton?.addEventListener("click", async () => {
@@ -41,10 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
           "X-CSRFToken": getCookie("csrftoken"),
         },
         credentials: "same-origin",
-        body: JSON.stringify({ name: cityName }), // <-- ключ ДОЛЖЕН быть name
+        body: JSON.stringify({ name: cityName }),
       });
 
-      // Если не залогинен, Django может редиректить на /accounts/login/
       if (res.redirected) {
         window.location.href = res.url;
         return;
@@ -130,7 +152,6 @@ document.addEventListener("DOMContentLoaded", () => {
         icon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`;
         icon.alt = data.weather[0].description;
 
-        // <-- ВАЖНО: записываем текущий город в кнопку здесь
         if (addButton) addButton.dataset.city = data.name;
 
         setBackgroundVideo(data.weather[0].main, data.weather[0].icon);
@@ -138,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .catch(() => {
         citygeo.textContent = "Город не найден";
-        if (addButton) delete addButton.dataset.city; // чтоб не слать мусор
+        if (addButton) delete addButton.dataset.city;
       });
   }
 
@@ -196,8 +217,18 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         });
 
-        const today = Object.keys(days)[0];
-        showHourlyForecast(days[today]);
+        const todayKey = Object.keys(days)[0];
+        showHourlyForecast(days[todayKey]);
+
+        document.getElementById("first-card").addEventListener("click", () => {
+          document
+            .querySelectorAll(".day-card")
+            .forEach((c) => c.classList.remove("active"));
+          showHourlyForecast(days[todayKey]);
+
+          const today = Object.keys(days)[0];
+          showHourlyForecast(days[today]);
+        });
       });
   }
 
@@ -227,7 +258,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Обработка URL-параметра
   const urlParams = new URLSearchParams(window.location.search);
   const queryCity = urlParams.get("q");
   if (queryCity) getWeatherByCity(queryCity);
@@ -253,10 +283,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     const data = await res.json();
     if (!data.ok) {
-      // если уже есть — тогда вызывай remove
     }
   }
-  // 1) вернуть success-флаг
   async function getWeatherByCity(city) {
     try {
       const res = await fetch(
@@ -280,20 +308,18 @@ document.addEventListener("DOMContentLoaded", () => {
         setBackgroundVideo(data.weather[0].main, data.weather[0].icon);
         await getWeekForecast(data.coord.lat, data.coord.lon);
 
-        // если у тебя есть кнопка "в избранное"
         const addButton = document.getElementById("addbutton");
         if (addButton) addButton.dataset.city = data.name;
 
         return true;
       } else {
-        return false; // города нет
+        return false;
       }
     } catch {
-      return false; // сеть/ошибка
+      return false;
     }
   }
 
-  // 2) загрузка по геолокации
   function loadByGeolocation() {
     if (!navigator.geolocation) {
       citygeo.textContent = "Геолокация не доступна";
@@ -333,7 +359,6 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  // 3) при старте страницы — пробуем q, иначе гео
   (async function initFromQuery() {
     const urlParams = new URLSearchParams(window.location.search);
     const queryCity = urlParams.get("q");
@@ -341,15 +366,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (queryCity) {
       const ok = await getWeatherByCity(queryCity);
       if (!ok) {
-        // город не найден → показываем геолокацию
         loadByGeolocation();
-        // опционально чистим ?q из адресной строки
         if (window.history && window.history.replaceState) {
           window.history.replaceState({}, "", "/search/");
         }
       }
     } else {
-      // если q не задан — сразу геолокация
       loadByGeolocation();
     }
   })();
