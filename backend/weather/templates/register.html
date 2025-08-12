@@ -1,4 +1,4 @@
-{%load static%} {%load django_vite%}
+{% load static %}{% load django_vite %}
 <!DOCTYPE html>
 <html lang="ru">
   <head>
@@ -18,23 +18,63 @@
         <img src="{% static 'images/logo.png' %}" alt="logo" />
         <h1>StepWeather</h1>
       </div>
+
+      <button id="lang-toggle" class="lang-toggle" aria-label="Switch language">
+        EN
+      </button>
+
       <form>
-        <article>Логин</article>
-        <input type="text" placeholder="Введите Ваш логин" required />
-        <article>Пароль</article>
-        <input type="password" placeholder="Введите Ваш пароль" required />
-        <article>Повторите пароль</article>
-        <input type="password" placeholder="Введите Ваш пароль" required />
-        <button type="submit" class="button">Зарегестрироваться</button>
+        <label style="display: flex; flex-direction: column">
+          <span data-i18n="register.username">Логин</span>
+          <input
+            type="text"
+            name="username"
+            required
+            data-i18n="register.username"
+            data-i18n-attr="placeholder"
+            placeholder="Логин"
+          />
+        </label>
+
+        <label style="display: flex; flex-direction: column">
+          <span data-i18n="register.password">Пароль</span>
+          <input
+            type="password"
+            name="password1"
+            required
+            data-i18n="register.password"
+            data-i18n-attr="placeholder"
+            placeholder="Пароль"
+          />
+        </label>
+
+        <label style="display: flex; flex-direction: column">
+          <span data-i18n="register.password2">Повторите пароль</span>
+          <input
+            type="password"
+            name="password2"
+            required
+            data-i18n="register.password2"
+            data-i18n-attr="placeholder"
+            placeholder="Повторите пароль"
+          />
+        </label>
+
+        <button type="submit" class="button" data-i18n="register.submit">
+          Зарегистрироваться
+        </button>
       </form>
+
       <div class="reg">
-        <div>Уже есть аккаунт?</div>
-        <a href="./login.html">Ввойдите сейчас!</a>
+        <div data-i18n="register.have_account">Уже есть аккаунт?</div>
+        <a href="{% url 'login' %}" data-i18n="register.login_link">Войти</a>
       </div>
     </div>
+
     <div class="images-left">
       <img src="{% static 'images/register.jpg' %}" alt="" />
     </div>
+
     {% vite_asset 'src/register.js' %}
   </body>
 </html>

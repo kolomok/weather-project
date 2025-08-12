@@ -30,6 +30,10 @@ FRONTEND_DIST = BASE_DIR.parent / "frontend" / "dist"
 
 # Application definition
 
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -60,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.locale.LocaleMiddleware",
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -115,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "ru"
 
 TIME_ZONE = 'UTC'
 
@@ -123,6 +128,12 @@ USE_I18N = True
 
 USE_TZ = True
 
+LANGUAGES = [
+    ("ru", "Русский"),
+    ("en", "English"),
+]
+
+LOCALE_PATHS = [BASE_DIR / "locale"]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/

@@ -1,6 +1,6 @@
 {% load static %} {% load django_vite %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,7 +8,6 @@
     <link rel="icon" href="{% static 'images/logo.png' %}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
     <link
       href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap"
       rel="stylesheet"
@@ -21,32 +20,49 @@
           <img src="{% static 'images/logo.png' %}" alt="logo" />
           <p>StepWeather</p>
         </div>
+
         <div class="search-container">
           <input
             type="text"
+            id="search-input"
             class="search-input"
             placeholder="Найти город..."
-            id="search-input"
           />
-          <button id="search-btn">
+          <button id="search-btn" aria-label="Поиск">
             <img
               src="{% static 'images/search_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg'%}"
               alt=""
             />
           </button>
         </div>
+
         <div class="user-actions">
+          <div
+            class="unit-toggle"
+            id="unitToggle"
+            aria-label="Единицы температуры"
+          >
+            <button type="button" data-unit="metric" class="active">°C</button>
+            <button type="button" data-unit="imperial">°F</button>
+          </div>
+
+          <button id="lang-toggle" class="btn-ghost" type="button">EN</button>
+
           <a class="btn" href="/">Главная</a>
         </div>
       </nav>
+
       <main class="favorites-main">
         <p>Мои избранные города</p>
+
         <div id="fav-list" class="favorites-grid"></div>
+
         <div id="fav-empty" class="empty" style="display: none">
           Пока ничего нету
         </div>
       </main>
     </div>
+
     {% vite_asset 'src/favorites.js' %}
   </body>
 </html>

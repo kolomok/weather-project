@@ -1,6 +1,6 @@
 {%load static%} {%load django_vite%}
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="{{ LANGUAGE_CODE }}">
   <head>
     <meta charset="UTF-8" />
     <title>Step Weather</title>
@@ -42,6 +42,8 @@
             class="search-input"
             placeholder="Найти город..."
             required
+            data-i18n="search.placeholder"
+            data-i18n-attr="placeholder"
           />
           <button type="submit" id="search-btn">
             <img
@@ -63,14 +65,27 @@
         </div>
         <div class="sett" id="accSett">
           <button id="closeSett">X</button>
-          <a href="{% url 'favorites'%}">Избранное</a>
+          <a href="{% url 'favorites'%}" data-i18n="nav.favorites">Избранное</a>
+          <div
+            class="unit-toggle"
+            id="unitToggle"
+            aria-label="Единицы температуры"
+          >
+            <button type="button" data-unit="metric" class="active">°C</button>
+            <button type="button" data-unit="imperial">°F</button>
+          </div>
+          <button id="lang-toggle" class="btn-ghost" title="Switch language">
+            {% if LANGUAGE_CODE == 'ru' %}EN{% else %}RU{% endif %}
+          </button>
           {% if request.user.is_authenticated %}
           <div class="user-info">
             <span>👤 {{ request.user.username }}</span>
-            <a href="{% url 'logout' %}">Выйти</a>
+            <a href="{% url 'logout' %}" data-i18n="nav.logout">Выйти</a>
           </div>
           {% else %}
-          <a href="{% url 'login' %}" class="btn-login">Войти</a>
+          <a href="{% url 'login' %}" class="btn-login" data-i18n="nav.login"
+            >Войти</a
+          >
           {% endif %}
         </div>
       </nav>

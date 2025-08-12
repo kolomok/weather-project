@@ -11,7 +11,6 @@
     />
   </head>
   <body>
-    <!-- Прелоадер -->
     <div id="preloader">
       <div class="container">
         <div class="cloud front">
@@ -27,11 +26,9 @@
       </div>
     </div>
 
-    <!-- Видео -->
     <video id="bg-video" autoplay muted loop playsinline></video>
 
     <div class="interface">
-      <!-- Навигация -->
       <nav>
         <div class="logo">
           <img src="{% static 'images/logo.png' %}" alt="logo" />
@@ -44,6 +41,9 @@
             id="search-input"
             class="search-input"
             placeholder="Найти город..."
+            required
+            data-i18n="search.placeholder"
+            data-i18n-attr="placeholder"
           />
           <button id="search-btn">
             <img
@@ -72,21 +72,33 @@
 
           <div class="sett" id="accSett">
             <button id="closeSett">X</button>
-            <a href="{% url 'favorites'%}">Избранное</a>
-
+            <a href="{% url 'favorites'%}" data-i18n="nav.favorites"
+              >Избранное</a
+            >
+            <div
+              class="unit-toggle"
+              id="unitToggle"
+              aria-label="Единицы температуры"
+            >
+              <button type="button" data-unit="metric" class="active">
+                °C
+              </button>
+              <button type="button" data-unit="imperial">°F</button>
+            </div>
             {% if request.user.is_authenticated %}
             <div class="user-info">
               <span>👤 {{ request.user.username }}</span>
-              <a href="{% url 'logout' %}">Выйти</a>
+              <a href="{% url 'logout' %}" data-i18n="nav.logout">Выйти</a>
             </div>
             {% else %}
-            <a href="{% url 'login' %}" class="btn-login">Войти</a>
+            <a href="{% url 'login' %}" class="btn-login" data-i18n="nav.login"
+              >Войти</a
+            >
             {% endif %}
           </div>
         </div>
       </nav>
 
-      <!-- Текущая погода -->
       <header>
         <div class="weather-card" id="first-card">
           <div class="infoweathercard">
@@ -102,11 +114,9 @@
           </div>
         </div>
 
-        <!-- Погода по часам -->
         <div id="hours" class="hours"></div>
       </header>
 
-      <!-- Прогноз по дням -->
       <section>
         <div id="week-forecast" class="weather-card-next-days"></div>
       </section>

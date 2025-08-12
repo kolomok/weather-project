@@ -1,6 +1,8 @@
 from django.urls import path
 from django.contrib import admin
 from . import views
+from django.conf.urls.i18n import set_language
+from weather import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -15,4 +17,5 @@ urlpatterns = [
     path("api/favorites/add/", views.favorites_add, name="favorites_add"),
     path("api/favorites/remove/", views.favorites_remove, name="favorites_remove"),
     path("logout/", views.logout_view, name="logout"),
+     path("i18n/setlang/", set_language, name="set_language"),
 ]

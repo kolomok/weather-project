@@ -280,3 +280,25 @@ nav #accSett {
       -ms-flex-align: center;
           align-items: center;
 }
+
+.unit-toggle {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  gap: 6px;
+  padding: 4px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+}
+.unit-toggle button {
+  border: 0;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #e3e3e3;
+  background: transparent;
+}
+.unit-toggle button.active {
+  background: rgba(255, 255, 255, 0.18);
+  font-weight: 600;
+}

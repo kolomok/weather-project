@@ -1,4 +1,4 @@
-{% load static %} {%load django_vite%}
+{% load static %}{% load django_vite %}
 <!DOCTYPE html>
 <html lang="ru">
   <head>
@@ -7,7 +7,6 @@
     <link rel="icon" href="{% static 'images/logo.png' %}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
     <link
       href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap"
       rel="stylesheet"
@@ -17,23 +16,56 @@
     <div class="images-left">
       <img src="{% static 'images/login.jpg' %}" alt="" />
     </div>
+
     <div class="form">
+      <button id="lang-toggle" class="lang-toggle" aria-label="Switch language">
+        EN
+      </button>
       <div class="logo">
         <img src="{% static 'images/logo.png' %}" alt="logo" />
         <h1>StepWeather</h1>
       </div>
+
       <form>
-        <article>Логин</article>
-        <input type="text" placeholder="Введите Ваш логин" required />
-        <article>Пароль</article>
-        <input type="password" placeholder="Введите Ваш пароль" required />
-        <button type="submit" class="button">Ввойти</button>
+        {% csrf_token %}
+
+        <label style="display: flex; flex-direction: column">
+          <span data-i18n="login.username">Логин</span>
+          <input
+            type="text"
+            name="username"
+            required
+            data-i18n="login.username"
+            data-i18n-attr="placeholder"
+            placeholder="Логин"
+          />
+        </label>
+
+        <label style="display: flex; flex-direction: column">
+          <span data-i18n="login.password">Пароль</span>
+          <input
+            type="password"
+            name="password"
+            required
+            data-i18n="login.password"
+            data-i18n-attr="placeholder"
+            placeholder="Пароль"
+          />
+        </label>
+
+        <button type="submit" class="button" data-i18n="login.submit">
+          Войти
+        </button>
       </form>
+
       <div class="reg">
-        <div>У Вас нету аккаунта?</div>
-        <a href="{% url 'register' %}">Заругестрируйтесь сейчас!</a>
+        <div data-i18n="login.haveacc">У Вас нет аккаунта?</div>
+        <a href="{% url 'register' %}" data-i18n="login.haheurl"
+          >Зарегистрируйтесь сейчас!</a
+        >
       </div>
     </div>
+
     {% vite_asset 'src/login.js' %}
   </body>
 </html>

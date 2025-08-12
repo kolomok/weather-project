@@ -558,3 +558,33 @@ section {
     height: 90px;
   }
 }
+
+.unit-toggle {
+  display: inline-flex;
+  gap: 6px;
+  padding: 4px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  button {
+    border: 0;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #e3e3e3;
+    background: transparent;
+    &.active {
+      background: rgba(255, 255, 255, 0.18);
+      font-weight: 600;
+    }
+  }
+}
+.btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.btn-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+}
