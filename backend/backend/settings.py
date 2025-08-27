@@ -25,11 +25,9 @@ SECRET_KEY = 'django-insecure-t#o5bmvs93rk)!r*7*$^a%)^qu5!=#=d4lz_+8v#*d_si$me05
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    "weather-project-iq6o.onrender.com",
-    "localhost",
-    "127.0.0.1",
-]
+ALLOWED_HOSTS = [".onrender.com", "localhost", "127.0.0.1"]
+
+CSRF_TRUSTED_ORIGINS = ["https://*.onrender.com"]
 FRONTEND_DIST = BASE_DIR.parent / "frontend" / "dist"
 
 # Application definition
