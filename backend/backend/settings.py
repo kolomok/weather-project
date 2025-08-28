@@ -52,7 +52,6 @@ STATICFILES_DIRS = [
     BASE_DIR / "static_src", 
     BASE_DIR.parent / "frontend" / "dist"
 ]
-STATIC_ROOT = BASE_DIR / "staticfiles"
 
 DJANGO_VITE_ASSETS_PATH = BASE_DIR.parent / "frontend" / "dist"
 DJANGO_VITE_MANIFEST_PATH = DJANGO_VITE_ASSETS_PATH / ".vite" / "manifest.json"
