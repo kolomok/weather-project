@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.staticfiles',
     'django_vite',
     'weather',
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
+    BASE_DIR / "staticfiles", 
     BASE_DIR.parent / "frontend" / "dist"
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
